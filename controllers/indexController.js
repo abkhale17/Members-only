@@ -2,7 +2,17 @@ const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 require('dotenv').config()
 var User = require('../models/user')
+var Message = require('../models/message')
 const bcrypt = require('bcryptjs')
+
+exports.index = function(req, res, next){
+	Message.find()
+		.populate('user')
+		.exec((err, messages) => {
+			if(err) { return next(err)}
+			res.render('home-page', {title:'Roaster Club', messages:messages})
+		})
+}
 
 exports.signUp_form_get = function(req, res, next){
 	res.render('sign-up-form', {title:"Sign Up Form"})
@@ -85,3 +95,49 @@ exports.join_the_club_post = (req, res, next) => {
 exports.login_form_get = (req, res, next) => {
 	res.render('login-form', {title: 'login form'})
 }
+
+exports.create_message_get = (req, res, next) => {
+	res.render('new-msg-form',{title:'Create new Message'})
+}
+
+exports.create_message_post = [
+	body('title')
+		.isLength({ min: 1 })
+		.trim()
+		.withMessage('title must be specified.'),
+	body('message')
+		.isLength({ min: 2 })
+		.trim()
+		.withMessage('U must leave a message'),
+	sanitizeBody('title').escape(),
+    sanitizeBody('message').escape(),
+
+    (req, res, next) => {
+    	// Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+        	console.log(errors,"**errror occured")
+        	// Flash ERROR messages implementation
+            // There are errors. Render form again with sanitized values/errors messages.
+            res.render('new-msg-form', { title: 'Create new Message' });
+            return;
+        } else {
+        	var new_msg = new Message(
+	        	{
+	        		title: req.body.title,
+	        		text : req.body.message,
+	        		user: req.body.userid
+	        	})
+
+        	new_msg.save((err, msg) => {
+        		if(err) { return next(err)}
+        		console.log(msg)
+        		console.log(msg.createdAt)
+        		res.redirect('/')
+        	})
+        }
+
+    }
+
+]

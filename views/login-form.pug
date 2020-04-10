@@ -4,7 +4,9 @@ block content
 	h1= title
 
 	if currentUser
-		p You have logged in as a #{currentUser.username}
+		p You are logged in as a #{currentUser.username}
+		hr
+		a(href='/create-message') Create a new message
 		hr
 		a(href='/log-out') Log out
 	else

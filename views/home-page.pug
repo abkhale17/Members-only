@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	h1= title
+	if currentUser
+		p You are logged in as a #{currentUser.username}
+		hr
+		a(href='/create-message') Create a new message
+		hr
+		each msg in messages
+			h3 #{msg.title}
+			p #{msg.text}
+			p Message posted at #{msg.createdAt}
+			if currentUser.membership_status === 'Active'
+				p posted by #{msg.user.username}
+			hr
+		a(href='/log-out') Log out
+	else
+		p You are not currently logged in...!
+		p Login to create message...!
+		hr
+		a(href='/login') Login
+		hr
+		a(href='/sign_up') Sign Up

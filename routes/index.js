@@ -3,7 +3,7 @@ var router = express.Router();
 var indexController = require('../controllers/indexController')
 const passport = require("passport");
 
-router.get('/', (req,res) => res.send('home page'))
+router.get('/', indexController.index)
 
 router.get('/sign_up', indexController.signUp_form_get)
 
@@ -23,5 +23,9 @@ router.get("/log-out", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+router.get('/create-message', indexController.create_message_get)
+
+router.post('/create-message', indexController.create_message_post)
 
 module.exports = router;
