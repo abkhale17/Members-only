@@ -81,3 +81,7 @@ exports.join_the_club_post = (req, res, next) => {
 		})
 	}
 }
+
+exports.login_form_get = (req, res, next) => {
+	res.render('login-form', {title: 'login form'})
+}

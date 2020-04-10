@@ -13,6 +13,7 @@ var logger = require('morgan');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs')
 var pug = require('pug')
+var User = require('./models/user')
 
 require('dotenv').config()
 
@@ -34,39 +35,43 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-// passport.use(
-//   new LocalStrategy((username, password, done) => {
-//     User.findOne({ username: username }, (err, user) => {
-//       if (err) { 
-//         return done(err);
-//       };
-//       if (!user) {
-//         return done(null, false, { msg: "Incorrect username" });
-//       }
-//       bcrypt.compare(password, user.password, (err, result) => {
-//       	if(result) {
-//       		return done(null, user);
-//       	} else {
-//       		return done(null, false, {msg: "Incorrect password"})
-//       	}
-//       })
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      if (err) { 
+        return done(err);
+      };
+      if (!user) {
+        return done(null, false, { msg: "Incorrect username" });
+      }
+      bcrypt.compare(password, user.password, (err, result) => {
+      	if(result) {
+      		return done(null, user);
+      	} else {
+      		return done(null, false, {msg: "Incorrect password"})
+      	}
+      })
       
-//     });
-//   })
-// );
-// passport.serializeUser(function(user, done) {
-//   done(null, user.id);
-// });
+    });
+  })
+);
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
 
-// passport.deserializeUser(function(id, done) {
-//   User.findById(id, function(err, user) {
-//     done(err, user);
-//   });
-// });
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use('/', indexRouter);
 
