@@ -16,6 +16,11 @@ block content
 			hr
 		a(href='/log-out') Log out
 	else
+		each msg in messages
+			h3 #{msg.title}
+			p #{msg.text}
+			p Message posted at #{msg.createdAt}
+			hr
 		p You are not currently logged in...!
 		p Login to create message...!
 		hr
