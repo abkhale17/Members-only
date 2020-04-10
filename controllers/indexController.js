@@ -1,5 +1,6 @@
 const { body,validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
+require('dotenv').config()
 var User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
@@ -8,10 +9,6 @@ exports.signUp_form_get = function(req, res, next){
 }
 
 exports.signUp_form_post =  [
-	(req, res, next) => {
-		console.log(req.body, "**1**")
-		next();
-	},
 	body('first_name')
 		.isLength({ min: 1 })
 		.trim()
@@ -40,14 +37,12 @@ exports.signUp_form_post =  [
     sanitizeBody('confirmPassword').escape(),
 
     (req, res, next) => {
-    	console.log(req.body, "**2**")
     	// Extract the validation errors from a request.
         const errors = validationResult(req);
 
         if (!errors.isEmpty()) {
-        	console.log("**errror occured")
-
-        	// Flash error messages implementation
+        	console.log(errors,"**errror occured")
+        	// Flash ERROR messages implementation
             // There are errors. Render form again with sanitized values/errors messages.
             res.render('sign-up-form', { title: 'Sign Up Form' });
             return;
@@ -61,12 +56,28 @@ exports.signUp_form_post =  [
 			    		last_name : req.body.last_name,
 			    		username  : req.body.username,
 			    		password  : hashPassword
-			    }).save(err => {
+			    }).save((err,user) => {
 				    	if (err) { return next(err) };
-				    	console.log("user saved")
-				    	res.redirect("/");
+				    	console.log(user.username,"user saved")
+				    	res.render("join-the-club", {title:"Join the Club", user:user.username, id:user._id});
 				})
         	})
     	}
 	}
 ]
+
+
+exports.join_the_club_post = (req, res, next) => {
+	if( req.body.adminPW === process.env.adminPW){
+		User.findByIdAndUpdate(req.body.userid, {$set:{membership_status:'Active', _id:req.body.userid}}, function(err, updatedUser){
+			// throw SUCCESS Flash message
+			res.redirect('/')
+		})
+	} else {
+		User.findById(req.body.userid, function(err,user) {
+			if(err) {return next()}
+			// throw ERROR Flash message
+			res.render("join-the-club", {title:"Join the Club", user:user.username, id:user._id})
+		})
+	}
+}
