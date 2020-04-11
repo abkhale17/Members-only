@@ -1,0 +1,12 @@
+extends layout
+
+block content
+	h1= title
+
+	p Do you really want to delete this Message?
+
+	form(method='POST' action='')
+		div.form-group
+			input.form-control(type='hidden',name='del_msg' value=msgid)
+
+		button.btn.btn-primary(type='submit') Delete

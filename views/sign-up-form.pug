@@ -18,6 +18,9 @@ block content
 		div.form-group
 			label(for='confirmPassword') Confirm Password:
 			input#pw2.form-control(type='password' name='confirmPassword')
+		div.form-group
+			input(type='checkbox' name='isAdmin')
+			label(for='isAdmin')  is Admin
 		button.btn.btn-primary(type='submit') Sign Up
 
 	if error

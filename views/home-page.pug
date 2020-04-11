@@ -10,16 +10,20 @@ block content
 		each msg in messages
 			h3 #{msg.title}
 			p #{msg.text}
-			p Message posted at #{msg.createdAt}
+			p Message posted at #{msg.timestamp}
 			if currentUser.membership_status === 'Active'
 				p posted by #{msg.user.username}
-			hr
+			if currentUser.admin == true
+				p posted by #{msg.user.username}
+				br
+				a(href=`/${msg._id}/delete-message`) Delete
+				hr
 		a(href='/log-out') Log out
 	else
 		each msg in messages
 			h3 #{msg.title}
 			p #{msg.text}
-			p Message posted at #{msg.createdAt}
+			p Message posted at #{msg.timestamp}
 			hr
 		p You are not currently logged in...!
 		p Login to create message...!

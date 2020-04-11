@@ -8,7 +8,8 @@ var UserSchema = new Schema(
     username: {type: String, required: true, max: 100},
     password: { type: String, required: true },
     membership_status: {type: String, required: true, enum: ['Active', 'Contact','Expired','Cancelled' ], default: 'Contact'},
-    message: {type: Schema.Types.ObjectId, ref:'Message'}
+    message: {type: Schema.Types.ObjectId, ref:'Message'},
+    admin: {type: Boolean, default:false}
   }
 );
 

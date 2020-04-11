@@ -58,6 +58,8 @@ exports.signUp_form_post =  [
             return;
         } else {
 
+        	var is_Admin = req.body.isAdmin === 'on' ? true : false
+        	console.log(is_Admin)
         	bcrypt.hash(req.body.confirmPassword, 10, (err, hashPassword) => {
 				if(err){ return next(err)}
 				var user = new User(
@@ -65,7 +67,8 @@ exports.signUp_form_post =  [
 			    		first_name: req.body.first_name,
 			    		last_name : req.body.last_name,
 			    		username  : req.body.username,
-			    		password  : hashPassword
+			    		password  : hashPassword,
+			    		admin     : is_Admin
 			    }).save((err,user) => {
 				    	if (err) { return next(err) };
 				    	console.log(user.username,"user saved")
@@ -137,7 +140,17 @@ exports.create_message_post = [
         		res.redirect('/')
         	})
         }
-
     }
-
 ]
+
+exports.delete_message_get = (req, res, next) => {
+	res.render('delete-msg-form',{title:'Delete Message', msgid:req.params.id})
+}
+
+exports.delete_message_post = (req, res, next) => {
+	Message.findByIdAndRemove(req.body.del_msg, (err) => {
+		if(err) { return next(err)}
+			//#flash SUCCESSE message
+			res.redirect('/')
+	})
+}

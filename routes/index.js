@@ -28,4 +28,8 @@ router.get('/create-message', indexController.create_message_get)
 
 router.post('/create-message', indexController.create_message_post)
 
+router.get('/:id/delete-message', indexController.delete_message_get)
+
+router.post('/:id/delete-message', indexController.delete_message_post)
+
 module.exports = router;
