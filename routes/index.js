@@ -9,7 +9,9 @@ router.get('/sign_up', indexController.signUp_form_get)
 
 router.post('/sign_up', indexController.signUp_form_post)
 
-router.post('/join_the_club', indexController.join_the_club_post)
+router.get('/:id/join_the_club', indexController.join_the_club_get)
+
+router.post('/:id/join_the_club', indexController.join_the_club_post)
 
 router.get('/login', indexController.login_form_get)
 
@@ -21,6 +23,7 @@ router.post('/login', passport.authenticate("local", {
 
 router.get("/log-out", (req, res) => {
   req.logout();
+  req.flash("success", "Logout succesfull!" );
   res.redirect("/");
 });
 

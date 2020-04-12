@@ -1,33 +1,35 @@
 extends layout
 
 block content
-	h1= title
+	h1.title= title
 	if currentUser
-		p You are logged in as a #{currentUser.username}
-		hr
-		a(href='/create-message') Create a new message
-		hr
+		p Welcome #[strong #{currentUser.username}!]
 		each msg in messages
-			h3 #{msg.title}
-			p #{msg.text}
-			p Message posted at #{msg.timestamp}
-			if currentUser.membership_status === 'Active'
-				p posted by #{msg.user.username}
-			if currentUser.admin == true
-				p posted by #{msg.user.username}
-				br
-				a(href=`/${msg._id}/delete-message`) Delete
-				hr
-		a(href='/log-out') Log out
+			div.card
+				div.card-body
+					h3.card-title #{msg.title}
+					br
+					p.card-text #{msg.text}
+					br
+					p.card-text.post-time @ #{msg.timestamp}
+
+					if currentUser.membership_status === 'Active' || currentUser.admin == true
+						p.card-text.posted-by posted by #[strong #{msg.user.username}]
+					if currentUser.admin == true
+						br
+						a(href=`/${msg._id}/delete-message` class="btn btn-primary btn-del-msg" ) Delete
 	else
 		each msg in messages
-			h3 #{msg.title}
-			p #{msg.text}
-			p Message posted at #{msg.timestamp}
+			div.card
+				div.card-body
+					h3.card-title #{msg.title}
+					p.card-text #{msg.text}
+					p.card-text.post-time @ #{msg.timestamp}
+		//-
 			hr
-		p You are not currently logged in...!
-		p Login to create message...!
-		hr
-		a(href='/login') Login
-		hr
-		a(href='/sign_up') Sign Up
+			p You are not currently logged in...!
+			p Login to create message...!
+			hr
+			a(href='/login') Login
+			hr
+			a(href='/sign_up') Sign Up

@@ -52,7 +52,7 @@ exports.signUp_form_post =  [
 
         if (!errors.isEmpty()) {
         	console.log(errors,"**errror occured")
-        	// Flash ERROR messages implementation
+        	req.flash("error", "Error while creating new  Account" );
             // There are errors. Render form again with sanitized values/errors messages.
             res.render('sign-up-form', { title: 'Sign Up Form' });
             return;
@@ -72,6 +72,7 @@ exports.signUp_form_post =  [
 			    }).save((err,user) => {
 				    	if (err) { return next(err) };
 				    	console.log(user.username,"user saved")
+				    	req.flash("success", "Account created succesfully! LOGIN to continue!" );
 				    	res.render("join-the-club", {title:"Join the Club", user:user.username, id:user._id});
 				})
         	})
@@ -79,18 +80,24 @@ exports.signUp_form_post =  [
 	}
 ]
 
-
+exports.join_the_club_get  = (req, res, next) => {
+	User.findById(req.params.id, function(err, user){
+		if(err) {return next()}
+		res.render("join-the-club", {title:"Join the Club", user:user})
+	})
+	
+}
 exports.join_the_club_post = (req, res, next) => {
 	if( req.body.adminPW === process.env.adminPW){
 		User.findByIdAndUpdate(req.body.userid, {$set:{membership_status:'Active', _id:req.body.userid}}, function(err, updatedUser){
-			// throw SUCCESS Flash message
+			req.flash("success", "You have joined the club succesfully!" );
 			res.redirect('/')
 		})
 	} else {
-		User.findById(req.body.userid, function(err,user) {
+		User.findById(req.params.id, function(err, user){
 			if(err) {return next()}
-			// throw ERROR Flash message
-			res.render("join-the-club", {title:"Join the Club", user:user.username, id:user._id})
+			req.flash("error", "Wrong Password for admin" );
+			res.render("join-the-club", {title:"Join the Club", user:user})
 		})
 	}
 }
@@ -121,7 +128,7 @@ exports.create_message_post = [
 
         if (!errors.isEmpty()) {
         	console.log(errors,"**errror occured")
-        	// Flash ERROR messages implementation
+        	req.flash("error", "Error while creating new  message! try again!" );
             // There are errors. Render form again with sanitized values/errors messages.
             res.render('new-msg-form', { title: 'Create new Message' });
             return;
@@ -135,8 +142,7 @@ exports.create_message_post = [
 
         	new_msg.save((err, msg) => {
         		if(err) { return next(err)}
-        		console.log(msg)
-        		console.log(msg.createdAt)
+        		req.flash("success", "Message posted succesfully!" );
         		res.redirect('/')
         	})
         }

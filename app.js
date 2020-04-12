@@ -14,6 +14,8 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs')
 var pug = require('pug')
 var User = require('./models/user')
+const flash = require('connect-flash')
+
 
 require('dotenv').config()
 
@@ -35,6 +37,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(flash())
+app.use(function (req, res, next) {
+  res.locals.errors = req.flash('error')
+  res.locals.successes=req.flash('success')
+  next();
+});
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {

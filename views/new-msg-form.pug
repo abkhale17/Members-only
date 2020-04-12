@@ -1,10 +1,10 @@
 extends layout
 
 block content
-	h1= title
+	h1.title= title
 
 	if currentUser
-		p Your name #{currentUser.username} will be published.
+		p Your name #[strong #{currentUser.username}] will be published.
 		p Only club members can see your name
 		form(method='POST', action='')
 			div.form-group
@@ -17,7 +17,7 @@ block content
 				input#userid.form-control(type='hidden',name='userid', required='true', value=currentUser._id )
 			button.btn.btn-primary(type='submit') submit
 	else
-		p You are not currently logged in...!
-		p Login to create message...!
-		hr
-		a(href='/login') Login
+		p You have to login to create new message
+		br
+		br
+		a(href=`/login` class="btn btn-primary btn-del-msg" ) Login
