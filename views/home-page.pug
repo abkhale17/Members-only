@@ -19,17 +19,16 @@ block content
 						br
 						a(href=`/${msg._id}/delete-message` class="btn btn-primary btn-del-msg" ) Delete
 	else
+		div.alert.alert-success.alert-dismissible
+			div.msg-para 
+				a(href='/sign-up') Sign Up 
+				| or   
+				a(href='/login') Login
+				|   to create a new message !
+			a(href='#' class="close" data-dismiss="alert" aria-label="close") &times
 		each msg in messages
 			div.card
 				div.card-body
 					h3.card-title #{msg.title}
 					p.card-text #{msg.text}
 					p.card-text.post-time @ #{msg.timestamp}
-		//-
-			hr
-			p You are not currently logged in...!
-			p Login to create message...!
-			hr
-			a(href='/login') Login
-			hr
-			a(href='/sign_up') Sign Up
