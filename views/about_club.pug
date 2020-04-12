@@ -1,0 +1,56 @@
+extends layout
+
+block content
+	h1.title= title
+
+	h3 About Club
+
+	p &nbsp;&nbsp;&nbsp;&nbsp; An exclusive clubhouse where your members can write embarrassing posts about non-members. Inside the clubhouse, members can see who the author of a post is, but outside they can only see the story and wonder who wrote it.
+	br
+	hr
+	br
+
+	h3 Some bullet Features
+	ul
+		li All member messages are displayed on Home page
+			ul
+				li only show the author and date of the messages to other club-members.
+		li Sign Up to create account
+			ul
+				li JOIN THE CLUB by entering secret admin password ( pw: iamadmin)
+		li Club-Members can Create a new message only if they are LOGGED IN
+		li Only Admin can delete messages
+			ul
+				li Mark user as a admin by providing checkbox IS ADMIN while Signing Up (for sake of simplicity)
+	br
+	hr
+	br
+	h3 Member and Non-member Accounts to test
+	br
+	ul
+		li
+			h4 Non-member (Only can view messages but not who posted it)
+		div
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong username: ] skyler
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong password: ] skyler
+		br
+		li
+			h4 Club member but not Admin
+		div
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong username: ] jesse
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong password: ] jesse
+		br
+		li
+			h4 Club member and Admin
+		div
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong username: ] walter
+			p.accounts &nbsp;&nbsp;&nbsp;&nbsp; #[strong password: ] walter
+		br
+
+
+
+
+
+
+
+

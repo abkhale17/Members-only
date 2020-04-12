@@ -160,3 +160,7 @@ exports.delete_message_post = (req, res, next) => {
 			res.redirect('/')
 	})
 }
+
+exports.about_club_get = (req, res, next) => {
+	res.render('about_club',{title:'Roast Non-Club members'})
+}

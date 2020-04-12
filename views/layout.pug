@@ -25,9 +25,9 @@ html(lang='en')
 							if currentUser
 								li.nav-item
 									a.nav-link(href='/log-out') Log Out
-								li.nav-item
-									a.nav-link(href='/create-message') Create a new message
-
+								if currentUser.membership_status == 'Active'
+									li.nav-item
+										a.nav-link(href='/create-message') Create a new message
 								if currentUser.membership_status != 'Active'
 									li.nav-item
 										a.nav-link(href=`/${currentUser._id}/join_the_club`) Join Club	
@@ -39,6 +39,8 @@ html(lang='en')
 									
 							li.nav-item
 								a.nav-link(href='/sign_up') Sign Up
+							li.nav-item
+								a.nav-link(href='/about') About Club
 
 			div.container
 				div(class='msgs')

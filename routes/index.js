@@ -15,6 +15,8 @@ router.post('/:id/join_the_club', indexController.join_the_club_post)
 
 router.get('/login', indexController.login_form_get)
 
+router.get('/about', indexController.about_club_get)
+
 router.post('/login', passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login"

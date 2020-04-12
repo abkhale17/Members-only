@@ -6,6 +6,9 @@ body {
 	padding-left: 0px;
 	padding-right: 0px
 }
+.container {
+	margin-bottom: 7rem;
+}
  
 .nav-item {
 	padding: 7px 40px 7px 40px;
@@ -48,6 +51,8 @@ body {
 .btn.btn-primary.btn-del-msg {
     display: block;
     clear: both;
+    margin-top: 28px;
+	margin-bottom: 7px;
 }
 .card {
 	margin-bottom: 2.25rem
@@ -79,4 +84,7 @@ h1.title {
 a:hover {
 	text-decoration: none;
 	color:  #52e146;
+}
+p.accounts {
+	margin-bottom: 0rem;
 }
