@@ -1,0 +1,78 @@
+body {
+	font-family: sans-serif;
+}
+.container-fluid {
+	margin: 0px;
+	padding-left: 0px;
+	padding-right: 0px
+}
+ 
+.nav-item {
+	padding: 7px 40px 7px 40px;
+	font-size: 18px;
+}
+.nav-item:hover{
+	background-color: #0204022e;
+	color: #52e146;
+}
+.navbar-toggler{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.navbar.navbar-expand-lg.navbar-dark.bg-dark {
+	padding-top: 0rem;
+	padding-bottom: 0rem;
+}
+.navbar-dark .navbar-brand:focus, .navbar-dark .navbar-brand:hover {
+    color: #52e146;
+    text-decoration: none;
+}
+.card-body {
+	position: relative;
+	background-color: #e8e8e866;
+	box-shadow: 0 7px 14px rgba(0,0,0,0.16), 0 4px 4px rgba(0,0,0,0.24);
+  	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.card-body:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.posted-by {
+	left: 5px;
+	float:left;
+}
+.post-time {
+	right: 5px;
+	float: right;
+}
+.btn.btn-primary.btn-del-msg {
+    display: block;
+    clear: both;
+}
+.card {
+	margin-bottom: 2.25rem
+}
+p.user-nav {
+	color: #52e146;
+	display: inline-block;
+	padding-top: .3125rem;
+	padding-bottom: .3125rem;
+	margin-right: 1rem;
+	font-size: 1.25rem;
+	line-height: inherit;
+	white-space: nowrap;
+}
+h1.title {
+	text-align: center;
+	margin-top:2.25rem;
+	margin-bottom: 2.25rem;
+	font-size: 3.5rem
+}
+
+.alert {
+	margin-top: 2.25rem;
+	margin-bottom: 2.25rem;
+}
+p.msg-para {
+	margin-bottom: 0rem;
+}
